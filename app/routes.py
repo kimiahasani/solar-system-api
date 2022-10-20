@@ -14,25 +14,6 @@ class Planet:
         self.id = id
         self.name = name
         self.description = description
-planets = [
-    Planet(1, 'Earth', "family earth"),
-    Planet(2, 'Saturn', "rings of saturn"),
-    Planet(3, 'Mars', "Red Planet")
-]
-planets_bp = Blueprint("planets", __name__)
-@planets_bp.route('/planets', methods = ["Get"])
-        
-def show_planets():
-    response_planet = []
-    for planet in planets:
-        response_planet.append(
-            {
-                "id": planet.id,
-                "name":planet.name,
-                "description":planet.description
-            }
-        )
-    return jsonify(response_planet)
 # POST new a planet
 @planets_bp.route('/planets/add', methods = ["POST"])
 def add_planet():
@@ -40,7 +21,7 @@ def add_planet():
     planets.append(request_newplanet)
     return "success add new planet"
 
-# --------------------------------------WAVE 2--------------------------------------
+# --------------------------------------WAVE 1--------------------------------------
 
 planets =[
     Planet(4, "Earth", "Our Beatiful Family"),
