@@ -1,12 +1,19 @@
-# from sys import prefix
 # from urllib import response
 # from ast import literal_eval
 from flask import Blueprint, jsonify
 class Planet:
-    def __init__(self, id, name, descrption) -> None:
+    def __init__(self, id, name, description):
         self.id = id
         self.name = name
-        self.description = descrption
+        self.description = description
+# POST new a planet
+# @planets_bp.route('/planets/add', methods = ["POST"])
+# def add_planet():
+#     request_newplanet = request.get_json()
+#     planets.append(request_newplanet)
+#     return "success add new planet"
+
+# --------------------------------------WAVE 1--------------------------------------
 
 planets =[
     Planet(4, "Earth", "Our Beatiful Family"),
