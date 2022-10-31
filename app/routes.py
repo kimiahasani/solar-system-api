@@ -4,14 +4,16 @@
 
 from flask import Blueprint, jsonify, request, make_response
 from app.models.planet import Planet
+from app.models import planet
 from app import db
-
 
 
 # --------------------------------------WAVE 1--------------------------------------
 
-planet_bp= Blueprint("planet", __name__, url_prefix= "/planet")
-@planet_bp.route("", methods =["GET"])
+planet_bp = Blueprint("planet", __name__, url_prefix="/planet")
+
+
+@planet_bp.route("", methods=["GET"])
 def show_planets():
     planets = Planet.query.all()
     res_body = []
@@ -20,7 +22,8 @@ def show_planets():
             {
                 "id": planet.id,
                 "name": planet.name,
-                "description": planet.description
+                "description": planet.description,
+                " diameter": planet.diameter
             }
         )
     return jsonify(res_body), 200
@@ -28,7 +31,7 @@ def show_planets():
 # # Wave 2
 # @planet_bp.route("/<planet_id>", methods =["GET"])
 # def check_invalid_id(planet_id):
-    
+
 #     try:
 #         planet_id = int(planet_id)
 #     except:
@@ -48,7 +51,7 @@ def show_planets():
 
 # @planet_bp.route("/<planet_name>", methods =["GET"])
 # def check_invalid_name(planet_name):
-    
+
 #     try:
 #         planet_name = str(planet_name)
 #     except:
@@ -67,15 +70,17 @@ def show_planets():
 #         "message": f"We can't found this planet"}), 404
 
 # --------------------------------------WAVE 3--------------------------------------
+
+
 @planet_bp.route("/add", methods=["POST"])
 def add_planet():
-    request_body =request.get_json()
+    request_body = request.get_json()
     new_planet = Planet(
-        name = request_body["name"],
-        description= request_body["description"],
-        diameter = request_body["diameter"])
+        name=request_body["name"],
+        description=request_body["description"],
+        diameter=request_body["diameter"])
     db.session.add(new_planet)
     db.session.commit()
     return make_response(f" Id: {new_planet.id} successfully created", 201)
 
-
+# --------------------------------------WAVE 4--------------------------------------
