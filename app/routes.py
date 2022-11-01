@@ -2,17 +2,13 @@ from flask import Blueprint, jsonify, request, make_response, abort
 from app.models.planet import Planet
 from app import db
 
-
 # --------------------------------------WAVE 1--------------------------------------
 
 planet_bp = Blueprint("planet", __name__, url_prefix="/planet")
-
-
 @planet_bp.route("", methods=["GET"])
 def show_planets():
     planets = Planet.query.all()
     res_body = []
-    planets = Planet.query.all()
     for planet in planets:
         res_body.append(
             {
@@ -67,7 +63,6 @@ def show_planets():
 
 # --------------------------------------WAVE 3--------------------------------------
 
-
 @planet_bp.route("/add", methods=["POST"])
 def add_planet():
     request_body = request.get_json()
@@ -85,11 +80,13 @@ def checking_valid_id(planet_id):
         planet_id = int(planet_id)
     except:
         response_message = f"Invalid id {planet_id}."
-        abort(make_response(response_message), 400)
+        # abort(make_response({"message":f"Invalid id {planet_id}."},400))
+        abort(make_response(response_message, 400))
     get_planet_id = Planet.query.get(planet_id)
     if get_planet_id is None:
         response_message = f"Planet with id {planet_id} was not found in the database"
-        abort(make_response(response_message), 404)
+        # abort(make_response({"message":f"lanet with id {planet_id} was not found in the database"}, 404))
+        abort(make_response(response_message, 404))
     return get_planet_id
 
 
