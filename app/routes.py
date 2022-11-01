@@ -80,8 +80,6 @@ def add_planet():
     return make_response(f" Id: {new_planet.id} successfully created", 201)
 
 # --------------------------------------WAVE 4--------------------------------------
-
-
 def checking_valid_id(planet_id):
     try:
         planet_id = int(planet_id)
