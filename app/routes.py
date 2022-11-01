@@ -1,3 +1,4 @@
+from unicodedata import name
 from flask import Blueprint, jsonify, request, make_response, abort
 from app.models.planet import Planet
 from app import db
@@ -5,9 +6,15 @@ from app import db
 # --------------------------------------WAVE 1--------------------------------------
 
 planet_bp = Blueprint("planet", __name__, url_prefix="/planet")
+
+
 @planet_bp.route("", methods=["GET"])
 def show_planets():
-    planets = Planet.query.all()
+    planet_name = request.args.get("name")
+    if planet_name:
+        planets = Planet.query.filter_by(name=planet_name)
+    else:
+        planets = Planet.query.all()
     res_body = []
     for planet in planets:
         res_body.append(
@@ -63,6 +70,7 @@ def show_planets():
 
 # --------------------------------------WAVE 3--------------------------------------
 
+
 @planet_bp.route("/add", methods=["POST"])
 def add_planet():
     request_body = request.get_json()
@@ -75,6 +83,8 @@ def add_planet():
     return make_response(f" Id: {new_planet.id} successfully created", 201)
 
 # --------------------------------------WAVE 4--------------------------------------
+
+
 def checking_valid_id(planet_id):
     try:
         planet_id = int(planet_id)
