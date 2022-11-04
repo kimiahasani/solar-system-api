@@ -1,4 +1,4 @@
-from unicodedata import name
+
 from flask import Blueprint, jsonify, request, make_response, abort
 from app.models.planet import Planet
 from app import db
@@ -15,17 +15,11 @@ def show_planets():
         planets = Planet.query.filter_by(name=planet_name)
     else:
         planets = Planet.query.all()
-    res_body = []
+
+    response = []
     for planet in planets:
-        res_body.append(
-            {
-                "id": planet.id,
-                "name": planet.name,
-                "description": planet.description,
-                " diameter": planet.diameter
-            }
-        )
-    return jsonify(res_body), 200
+        response.append(planet.to_dict())
+    return jsonify(response)
 
 # # Wave 2
 # @planet_bp.route("/<planet_id>", methods =["GET"])
