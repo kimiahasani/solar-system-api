@@ -127,3 +127,5 @@ def delete_one_planet(planet_id):
     db.session.delete(planet)
     db.session.commit()
     return jsonify({"message": f"Successfuly delete planet with id {planet_id}"}), 200
+
+# ~~~~~~~~~~~~~~~~~test commit 
